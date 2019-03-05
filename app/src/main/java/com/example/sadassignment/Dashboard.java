@@ -42,7 +42,6 @@ public class Dashboard extends AppCompatActivity {
                         product.setDescription(productdescription.getText().toString());
                         product.setPrice(productprice.getText().toString());
                         dbh.createproduct(product);
-                        //oh no where is my code
                     }
                 });
                 AlertDialog ad = adb.create();
