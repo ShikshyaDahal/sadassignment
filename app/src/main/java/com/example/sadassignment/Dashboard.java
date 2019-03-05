@@ -9,9 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.sadassignment.model.ProductModel;
+import com.example.sadassignment.utils.DatabaseHelper;
+
 public class Dashboard extends AppCompatActivity {
     ListView listView;
     Button additem;
+    ProductModel product;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,14 +29,19 @@ public class Dashboard extends AppCompatActivity {
                 View v1 = LayoutInflater.from(Dashboard.this).inflate(R.layout.additem_layout, null);
                 adb.setView(v1);
                 Button save = v1.findViewById(R.id.save);
-                EditText productname = v1.findViewById(R.id.productname);
-                EditText productdescription = v1.findViewById(R.id.productdescription);
-                EditText productprice = v1.findViewById(R.id.productprice);
+                final EditText productname = v1.findViewById(R.id.productname);
+                final EditText productdescription = v1.findViewById(R.id.productdescription);
+                final EditText productprice = v1.findViewById(R.id.productprice);
 
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        product = new ProductModel();
+                        DatabaseHelper dbh = new DatabaseHelper(Dashboard.this);
+                        product.setName(productname.getText().toString());
+                        product.setDescription(productdescription.getText().toString());
+                        product.setPrice(productprice.getText().toString());
+                        dbh.createproduct(product);
                     }
                 });
                 AlertDialog ad = adb.create();
