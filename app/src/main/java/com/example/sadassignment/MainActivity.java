@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 user.setPassword(password.getText().toString());
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
                 dbh.createUser(user);
-                Toast.makeText(MainActivity.this, "product added", Toast.LENGTH_SHORT).show();
             }
         });
 

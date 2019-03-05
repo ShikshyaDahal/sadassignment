@@ -46,6 +46,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv1.put("description", product.getDescription());
         cv1.put("price", product.getPrice());
         db1.insert("product", null, cv1);
-        //for inserting product
     }
 }
