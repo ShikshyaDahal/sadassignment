@@ -1,8 +1,11 @@
 package com.example.sadassignment.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.sadassignment.model.UserModel;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -23,4 +26,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void createUser(UserModel user) {
+        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = this.getWritableDatabase();
+        cv.put("name", user.getName());
+        cv.put("address", user.getAddress());
+        cv.put("email", user.getEmail());
+        cv.put("password", user.getPassword());
+        cv.put("phone", user.getPhone());
+        db.insert("user", null, cv);
+    }
 }
