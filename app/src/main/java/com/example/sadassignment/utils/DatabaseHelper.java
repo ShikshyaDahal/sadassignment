@@ -50,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db1.insert("product", null, cv1);
     }
 
+
     public ArrayList<ProductModel> readData() {
         ArrayList<ProductModel> al = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -71,5 +72,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         db.close();
         return al;
+    }
+    public ArrayList<UserModel> getUser() {
+        ArrayList<UserModel> users=new ArrayList<>();
+
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor c=db.rawQuery("select * from user",null);
+        if (c.getCount()>0){
+            if (c.moveToFirst()) {
+            do {
+                String email=c.getString(c.getColumnIndex("email"));
+                String password=c.getString(c.getColumnIndex("password"));
+                String name=c.getString(c.getColumnIndex("name"));
+                String address=c.getString(c.getColumnIndex("address"));
+                String phone=c.getString(c.getColumnIndex("phone"));
+
+                UserModel userModel=new UserModel.Builder().writeEmail(email).writePassword(password)
+                        .writeName(name).writeAddress(address).writePhone(phone).build();
+                users.add(userModel);
+            }while (c.moveToNext());
+            }
+        }
+
+        return users;
+
     }
 }

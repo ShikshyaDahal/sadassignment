@@ -34,12 +34,13 @@ public class MainActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user = new UserModel();
-                user.setEmail(email.getText().toString());
-                user.setAddress(address.getText().toString());
-                user.setName(name.getText().toString());
-                user.setPhone(phone.getText().toString());
-                user.setPassword(password.getText().toString());
+                user=new UserModel.Builder()
+                        .writeEmail(email.getText().toString())
+                        .writePassword(password.getText().toString())
+                        .writeName(name.getText().toString())
+                        .writeAddress(address.getText().toString())
+                        .writePhone(phone.getText().toString())
+                        .build();
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
                 dbh.createUser(user);
             }
