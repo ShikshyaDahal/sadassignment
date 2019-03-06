@@ -2,12 +2,14 @@ package com.example.sadassignment.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import com.example.sadassignment.model.ProductModel;
 import com.example.sadassignment.model.UserModel;
+
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -46,5 +48,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv1.put("description", product.getDescription());
         cv1.put("price", product.getPrice());
         db1.insert("product", null, cv1);
+    }
+
+    public ArrayList<ProductModel> readData() {
+        ArrayList<ProductModel> al = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("Select * from product", null);
+        if (c.getCount() > 0) {
+            if (c.moveToNext()) {
+                do {
+                    ProductModel pm = new ProductModel();
+                    pm.setId(c.getInt(c.getColumnIndex("id")));
+                    pm.setName(c.getString(c.getColumnIndex("productname")));
+                    pm.setDescription(c.getString(c.getColumnIndex("description")));
+                    pm.setPrice(c.getString(c.getColumnIndex("price")));
+                    al.add(pm);
+                }
+                while (c.moveToNext());
+            }
+        }
+
+        c.close();
+        db.close();
+        return al;
     }
 }

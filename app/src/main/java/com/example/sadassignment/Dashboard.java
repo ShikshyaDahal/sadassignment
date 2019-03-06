@@ -9,13 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.sadassignment.adapter.CustomAdapter;
 import com.example.sadassignment.model.ProductModel;
 import com.example.sadassignment.utils.DatabaseHelper;
+
+import java.util.ArrayList;
 
 public class Dashboard extends AppCompatActivity {
     ListView listView;
     Button additem;
     ProductModel product;
+    ArrayList<ProductModel> al = new ArrayList();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +36,8 @@ public class Dashboard extends AppCompatActivity {
                 final EditText productname = v1.findViewById(R.id.productname);
                 final EditText productdescription = v1.findViewById(R.id.productdescription);
                 final EditText productprice = v1.findViewById(R.id.productprice);
-
+                final AlertDialog ad = adb.create();
+                ad.show();
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -42,12 +47,22 @@ public class Dashboard extends AppCompatActivity {
                         product.setDescription(productdescription.getText().toString());
                         product.setPrice(productprice.getText().toString());
                         dbh.createproduct(product);
+                        ad.dismiss();
                     }
                 });
-                AlertDialog ad = adb.create();
-                ad.show();
+
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DatabaseHelper dh = new DatabaseHelper(Dashboard.this);
+        al = dh.readData();
+
+        listView.setAdapter(new CustomAdapter(Dashboard.this, al));
 
     }
 }

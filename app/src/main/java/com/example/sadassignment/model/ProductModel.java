@@ -3,6 +3,16 @@ package com.example.sadassignment.model;
 public class ProductModel {
     private String name, description, price;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
+
     public String getName() {
         return name;
     }
