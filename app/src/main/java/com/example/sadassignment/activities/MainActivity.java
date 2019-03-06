@@ -1,4 +1,4 @@
-package com.example.sadassignment;
+package com.example.sadassignment.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.sadassignment.R;
 import com.example.sadassignment.model.UserModel;
 import com.example.sadassignment.utils.DatabaseHelper;
 
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                         .build();
                 DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
                 dbh.createUser(user);
+                Intent i=new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
             }
         });
 

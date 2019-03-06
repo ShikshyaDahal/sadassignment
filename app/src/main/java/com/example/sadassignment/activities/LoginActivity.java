@@ -1,4 +1,4 @@
-package com.example.sadassignment;
+package com.example.sadassignment.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.sadassignment.R;
 import com.example.sadassignment.model.UserModel;
 import com.example.sadassignment.utils.DatabaseHelper;
 
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
                 for(int i=0;i<user.size();i++){
 
                     if(email.getText().toString().equals(user.get(i).getEmail()) && password.getText().toString().equals(user.get(i).getPassword())){
-                        Intent intent=new Intent(LoginActivity.this,Dashboard.class);
+                        Intent intent=new Intent(LoginActivity.this, Dashboard.class);
                         startActivity(intent);
                     }
                 }

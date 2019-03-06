@@ -2,38 +2,61 @@ package com.example.sadassignment.model;
 
 public class ProductModel {
     private String name, description, price;
+    int id;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    private ProductModel() {
     }
-
-    private int id;
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public static class Builder {
+        private String name, description, price;
+        private int id;
+
+        public Builder() {
+
+        }
+
+        public Builder writeInt(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder writeProductName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder writeProductPrice(String price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder writeProductDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ProductModel build() {
+            ProductModel p = new ProductModel();
+            p.name = this.name;
+            p.price = this.price;
+            p.description = this.description;
+            return p;
+        }
     }
 }

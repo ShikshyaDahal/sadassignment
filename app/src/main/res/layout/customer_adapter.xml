@@ -15,5 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/productprice"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Buy"
+        android:id="@+id/buy"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add to wishlist"
+        android:id="@+id/wishlist"/>
 
 </LinearLayout>

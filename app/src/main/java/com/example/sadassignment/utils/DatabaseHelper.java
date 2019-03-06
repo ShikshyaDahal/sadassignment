@@ -56,13 +56,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery("Select * from product", null);
         if (c.getCount() > 0) {
-            if (c.moveToNext()) {
+            if (c.moveToFirst()) {
                 do {
-                    ProductModel pm = new ProductModel();
-                    pm.setId(c.getInt(c.getColumnIndex("id")));
-                    pm.setName(c.getString(c.getColumnIndex("productname")));
-                    pm.setDescription(c.getString(c.getColumnIndex("description")));
-                    pm.setPrice(c.getString(c.getColumnIndex("price")));
+
+                    int id = c.getInt(c.getColumnIndex("id"));
+                    String name = c.getString(c.getColumnIndex("productname"));
+                    String description = c.getString(c.getColumnIndex("description"));
+                    String price = c.getString(c.getColumnIndex("price"));
+                    ProductModel pm = new ProductModel.Builder()
+                            .writeInt(id)
+                            .writeProductName(name).writeProductPrice(price).writeProductDescription(description).build();
+
                     al.add(pm);
                 }
                 while (c.moveToNext());
@@ -73,24 +77,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return al;
     }
+
     public ArrayList<UserModel> getUser() {
-        ArrayList<UserModel> users=new ArrayList<>();
+        ArrayList<UserModel> users = new ArrayList<>();
 
-        SQLiteDatabase db=this.getReadableDatabase();
-        Cursor c=db.rawQuery("select * from user",null);
-        if (c.getCount()>0){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from user", null);
+        if (c.getCount() > 0) {
             if (c.moveToFirst()) {
-            do {
-                String email=c.getString(c.getColumnIndex("email"));
-                String password=c.getString(c.getColumnIndex("password"));
-                String name=c.getString(c.getColumnIndex("name"));
-                String address=c.getString(c.getColumnIndex("address"));
-                String phone=c.getString(c.getColumnIndex("phone"));
+                do {
+                    String email = c.getString(c.getColumnIndex("email"));
+                    String password = c.getString(c.getColumnIndex("password"));
+                    String name = c.getString(c.getColumnIndex("name"));
+                    String address = c.getString(c.getColumnIndex("address"));
+                    String phone = c.getString(c.getColumnIndex("phone"));
 
-                UserModel userModel=new UserModel.Builder().writeEmail(email).writePassword(password)
-                        .writeName(name).writeAddress(address).writePhone(phone).build();
-                users.add(userModel);
-            }while (c.moveToNext());
+                    UserModel userModel = new UserModel.Builder().writeEmail(email).writePassword(password)
+                            .writeName(name).writeAddress(address).writePhone(phone).build();
+                    users.add(userModel);
+                } while (c.moveToNext());
             }
         }
 

@@ -1,14 +1,16 @@
-package com.example.sadassignment;
+package com.example.sadassignment.activities;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.sadassignment.R;
 import com.example.sadassignment.adapter.CustomAdapter;
 import com.example.sadassignment.model.ProductModel;
 import com.example.sadassignment.utils.DatabaseHelper;
@@ -20,6 +22,7 @@ public class Dashboard extends AppCompatActivity {
     Button additem;
     ProductModel product;
     ArrayList<ProductModel> al = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +44,10 @@ public class Dashboard extends AppCompatActivity {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        product = new ProductModel();
+                        product = new ProductModel.Builder().writeProductName(productname.getText().toString())
+                                .writeProductPrice(productprice.getText().toString())
+                                .writeProductDescription(productdescription.getText().toString()).build();
                         DatabaseHelper dbh = new DatabaseHelper(Dashboard.this);
-                        product.setName(productname.getText().toString());
-                        product.setDescription(productdescription.getText().toString());
-                        product.setPrice(productprice.getText().toString());
                         dbh.createproduct(product);
                         ad.dismiss();
                     }
@@ -61,7 +63,7 @@ public class Dashboard extends AppCompatActivity {
         super.onResume();
         DatabaseHelper dh = new DatabaseHelper(Dashboard.this);
         al = dh.readData();
-
+        Log.e("data size", ""+al.size());
         listView.setAdapter(new CustomAdapter(Dashboard.this, al));
 
     }
